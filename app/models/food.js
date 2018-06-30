@@ -8,6 +8,11 @@ const Food = bookshelf.Model.extend({
     name: {
       required: true,
       validator: validator.isString
+    },
+
+    calories: {
+      required: true,
+      validator: validator.isInteger
     }
   }
 });
