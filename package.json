@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "mocha"
+    "test": "mocha ./spec/setup.js --recursive \"./spec/**/*.js\" --require ./spec/spec_helper --exit"
   },
   "dependencies": {
     "bookshelf": "^0.13.3",
