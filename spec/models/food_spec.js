@@ -1,5 +1,5 @@
 describe('Food', () => {
-  xit('should require a name', () => {
+  it('should require a name', () => {
 
   });
 });

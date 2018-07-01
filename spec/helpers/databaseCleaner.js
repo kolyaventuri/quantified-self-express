@@ -3,7 +3,7 @@ const knex = require('../../db/knex');
 
 class DatabaseCleaner {
   static clean() {
-    return knexCleaner.clean(knex);
+    return cleaner.clean(knex);
   }
 }
 
