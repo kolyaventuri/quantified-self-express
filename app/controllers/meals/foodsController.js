@@ -43,6 +43,35 @@ class FoodsController {
       res.status(500).send();
     });
   }
+
+  static destroy(req, res, next) {
+    Meal.find(req.params.meal_id).then(meal => {
+      if(!meal) return res.status(404).send();
+
+      Food.find(req.params.id).then(food => {
+        if(!food) return res.status(404).send();
+
+        MealFood.where({ meal_id: meal._data.id, food_id: meal._data.id }, 'meal_foods').then(mfs => {
+          mfs = mfs.map(mf => mf.destroy());
+          Promise.all(mfs).then(() => {
+              res.json({ message: `Successfully removed ${food._data.name} from ${meal._data.name}`});
+            }).catch(err => {
+              console.error(err);
+              res.status(500).send();
+            });
+        }).catch(err => {
+          console.log(err);
+          res.status(500).send();
+        })
+      }).catch(err => {
+        console.error(err);
+        res.status(500).send();
+      });
+    }).catch(err => {
+      console.error(err);
+      res.status(500).send();
+    });
+  }
 }
 
 module.exports = FoodsController;

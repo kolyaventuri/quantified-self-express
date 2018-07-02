@@ -77,7 +77,7 @@ class Model {
   destroy() {
     return new Promise((resolve, reject) => {
       knex(this._tableName)
-        .where({id: this._data.id })
+        .where(this._data)
         .delete()
         .then(resolve)
         .catch(reject);
