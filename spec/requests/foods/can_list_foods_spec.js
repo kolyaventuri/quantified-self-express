@@ -24,6 +24,8 @@ describe('A GET request to /api/v1/foods', () => {
             expect(res.body[i].id).to.eq(i + 1);
             expect(res.body[i].name).to.eq(food.name);
             expect(res.body[i].calories).to.eq(food.calories);
+            expect(res.body[i]).to.not.have.property('created_at');
+            expect(res.body[i]).to.not.have.property('updated_at');
           }
 
           done();
