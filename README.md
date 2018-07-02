@@ -13,7 +13,7 @@ Clone down the repository and run `npm i` to fetch the necessary gems.
 
 ### Running Quantified self
 
-Quantified Self is an Express.JS, and can therefore be run simply by using the `npm start` command. This will start the server on `localhost:3000`
+Quantified Self is an Express.JS app, and can therefore be run simply by using the `npm start` command. This will start the server on `localhost:3000`
 If you are using a process manager like pm2, you can run the app with `pm2 start ./bin/www --name="Quantified Self"` from the application root.
 
 **Please run or deploy the [frontend service](https://github.com/kolyaventuri/qs-express-fe) in order to interact with the application as an end user.**
