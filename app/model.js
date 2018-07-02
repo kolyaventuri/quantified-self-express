@@ -42,13 +42,14 @@ class Model {
   get serialized() {
     let opts = Object.assign(this._data, {});
     let keys = Object.keys(this._serializable || {});
-    return opts;
+
     if(keys.length < 1) return opts;
 
     let serialized = {};
     for(let key of keys) {
       serialized[key] = opts[key];
     }
+
 
     return serialized;
   }
