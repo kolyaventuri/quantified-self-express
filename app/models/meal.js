@@ -13,6 +13,14 @@ class Meal extends Model {
     super(opts, rules);
     this._serializable = serializable;
   }
+
+  get foods() {
+    return new Promise((resolve, reject) => {
+      MealFoods.all().then(foods => {
+        resolve(foods);
+      }).catch(reject);
+    });
+  }
 }
 
 module.exports = Meal;
