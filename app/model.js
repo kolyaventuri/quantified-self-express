@@ -44,6 +44,17 @@ class Model {
   save() {
     return knex(this._tableName).insert(this._data, ['id', 'name', 'calories']);
   }
+
+  static all() {
+    let _name = this.name.toLowerCase();
+    let _tableName = pluralize(_name);
+    
+    return new Promise((resolve, reject) => {
+      knex(_tableName).select('*').then((rows) => {
+        resolve(rows);
+      }).catch(reject);
+    });
+  }
 }
 
 module.exports = Model;
