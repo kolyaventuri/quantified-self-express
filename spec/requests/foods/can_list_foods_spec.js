@@ -25,13 +25,19 @@ describe('A GET request to /api/v1/foods', () => {
           expect(res.body).to.be.an('array');
           expect(res.body).to.have.lengthOf(3);
 
+          let body = res.body;
+          body = body.sort((a, b) => {
+            if(a.id > b.id) return 1;
+            if(a.id < b.id) return -1;
+            return 0;
+          });
           for(let i = 0; i < data.length; i++) {
             let food = data[i][0];
-            expect(res.body[i].id).to.eq(food.id);
-            expect(res.body[i].name).to.eq(food.name);
-            expect(res.body[i].calories).to.eq(food.calories);
-            expect(res.body[i]).to.not.have.property('created_at');
-            expect(res.body[i]).to.not.have.property('updated_at');
+            expect(body[i].id).to.eq(food.id);
+            expect(body[i].name).to.eq(food.name);
+            expect(body[i].calories).to.eq(food.calories);
+            expect(body[i]).to.not.have.property('created_at');
+            expect(body[i]).to.not.have.property('updated_at');
           }
 
           done();
