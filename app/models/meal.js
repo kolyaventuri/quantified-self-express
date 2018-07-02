@@ -1,4 +1,6 @@
 const Model = require('../model');
+const MealFood = require('./mealFood');
+
 const rules = {
   name:     { required: true }
 };

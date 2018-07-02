@@ -1,4 +1,5 @@
 const Meal = require('../../models/meal');
+const Food = require('../../models/food');
 
 class FoodsController {
   static create(req, res, next) {
