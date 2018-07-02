@@ -56,7 +56,7 @@ class Model {
   /// Record methods
 
   save() {
-    return knex(this._tableName).insert(this._data, ['id', 'name', 'calories']);
+    return knex(this._tableName).insert(this._data, '*');
   }
 
   static all() {
@@ -65,11 +65,11 @@ class Model {
 
     return new Promise((resolve, reject) => {
       knex(_tableName).select('*').then((rows) => {
-        let foods = rows.map(food => {
-          new this(food);
+        let objects = rows.map(data => {
+          return new this(data).serialized;
         });
 
-        resolve(foods);
+        resolve(objects);
       }).catch(reject);
     });
   }
