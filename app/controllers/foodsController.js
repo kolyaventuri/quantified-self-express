@@ -32,6 +32,10 @@ class FoodsController {
       res.status(500).send();
     });
   }
+
+  static update(req, res, next) {
+    
+  }
 }
 
 module.exports = FoodsController;
