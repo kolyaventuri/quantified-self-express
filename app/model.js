@@ -89,7 +89,7 @@ class Model {
     let _tableName = pluralize(_name);
 
     return new Promise((resolve, reject) => {
-      knex(_tableName).select('*').then((rows) => {
+      knex(_tableName).select('*').orderBy('id', 'ASC').then((rows) => {
         let objects = rows.map(data => {
           return new this(data);
         });
