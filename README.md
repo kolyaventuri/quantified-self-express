@@ -20,7 +20,7 @@ If you are using a process manager like pm2, you can run the app with `pm2 start
 
 ### Running Tests
 
-The test suite can be run with `npm test`. More simply, please refer to our ([Travis CI])(https://travis-ci.com/kolyaventuri/quantified-self-express) page for the most up to date build and coverage statistics (without requiring a clone).
+The test suite can be run with `npm test`. More simply, please refer to our [Travis CI](https://travis-ci.com/kolyaventuri/quantified-self-express) page for the most up to date build and coverage statistics (without requiring a clone).
 
 ---
 ## Endpoints
