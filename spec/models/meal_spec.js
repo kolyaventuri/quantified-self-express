@@ -16,7 +16,7 @@ describe('Meal', () => {
     Promise.all(foods)
       .then((data) => {
         Food.all().then(foods => {
-          meal.food.then(_foods => {
+          meal.foods.then(_foods => {
             expect(_foods).to.be.an('array');
             expect(_foods).to.have.lengthOf(0);
 
