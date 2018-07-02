@@ -74,6 +74,16 @@ class Model {
     });
   }
 
+  destroy() {
+    return new Promise((resolve, reject) => {
+      knex(this._tableName)
+        .where({id: this._data.id })
+        .delete()
+        .then(resolve)
+        .catch(reject);
+    });
+  }
+
   static all() {
     let _name = this.name.toLowerCase();
     let _tableName = pluralize(_name);
