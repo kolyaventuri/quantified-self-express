@@ -60,6 +60,20 @@ class Model {
     return knex(this._tableName).insert(this._data, '*');
   }
 
+  update(data) {
+    return new Promise((resolve, reject) => {
+      knex(this._tableName)
+        .where({ id: this._data.id })
+        .update(data)
+        .returning('*')
+        .then(rows  => {
+          let row = rows[0];
+          resolve(new this.constructor(row));
+        })
+        .catch(reject);
+    });
+  }
+
   static all() {
     let _name = this.name.toLowerCase();
     let _tableName = pluralize(_name);
