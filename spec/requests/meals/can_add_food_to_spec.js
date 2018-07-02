@@ -26,4 +26,32 @@ describe('A POST request to a specific /api/v1/meals/:meal_id/foods/:id', () => 
         }).catch(done);
       }).catch(done);
   });
+
+  it('should return a 404 if the meal does not exist', (done) => {
+    chai.request(app)
+      .post('/api/v1/meals/1000/foods/20')
+      .end((err, res) => {
+        expect(err).to.be.null;
+
+        expect(res).to.have.status(404);
+        done();
+      });
+  });
+
+  it('should return a 404 if the food does not exist', (done) =>{
+    new Meal({ name: 'Breakfast' }).save()
+      .then(() => {
+        Meal.all().then(meals => {
+          let meal = meals[0];
+          chai.request(app)
+            .post(`/api/v1/meals/${meal._data.id}/foods/20`)
+            .end((err, res) => {
+              expect(err).to.be.null;
+
+              expect(res).to.have.status(404);
+              done();
+            });
+        }).catch(done);
+      }).catch(done);
+  });
 });
