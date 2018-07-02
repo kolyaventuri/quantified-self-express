@@ -1,0 +1,29 @@
+describe('A GET request to /api/v1/foods', () => {
+  it('should return a JSON array of the foods', () => {
+    let foods = [
+      { name: 'Toast', calories: 10 },
+      { name: 'Toast', calories: 20 },
+      { name: 'Toast', calories: 30 },
+    ];
+
+    foods = foods.map(Food.create);
+
+    chai.request(app)
+      .get('/api/v1/foods')
+      .end((err, res) => {
+        expect(err).to.be.null;
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.an('array');
+        expect(res.body).to.have.lengthOf(3);
+
+        for(let i = 0; i < foods.length; i++) {
+          let food = foods[i];
+          expect(res.body[i].id).to.eq(i + 1);
+          expect(res.body[i].name).to.eq(food.name);
+          expect(res.body[i].calories).to.eq(food.calories);
+        }
+
+        done();
+      });
+  });
+});
