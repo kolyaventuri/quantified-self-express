@@ -5,11 +5,20 @@ const Food = require('../../../../app/models/food');
 
 router.get('/', (req, res, next) => {
   Food.all().then(foods => {
-    res.json(foods);
+    res.json(foods.map(food => food.serialized));
   }).catch(err => {
     console.error(err);
     res.status(500).send();
-  })
+  });
+});
+
+router.get('/:id', (req, res, next) => {
+  Food.find(req.params.id).then(food => {
+    res.json(food.serialized);
+  }).catch(err => {
+    console.error(err);
+    res.status(500).send();
+  });
 });
 
 router.post('/', (req, res, next) => {
