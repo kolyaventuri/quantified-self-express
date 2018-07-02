@@ -1,4 +1,6 @@
 const Meal = require('../../models/meal');
+const Food = require('../../models/food');
+const MealFood = require('../../models/mealFood');
 
 class FoodsController {
   static create(req, res, next) {
@@ -51,7 +53,7 @@ class FoodsController {
       Food.find(req.params.id).then(food => {
         if(!food) return res.status(404).send();
 
-        MealFood.where({ meal_id: meal._data.id, food_id: meal._data.id }, 'meal_foods').then(mfs => {
+        MealFood.where({ meal_id: meal._data.id, food_id: food._data.id }, 'meal_foods').then(mfs => {
           mfs = mfs.map(mf => mf.destroy());
           Promise.all(mfs).then(() => {
               res.json({ message: `Successfully removed ${food._data.name} from ${meal._data.name}`});
