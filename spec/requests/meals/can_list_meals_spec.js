@@ -29,6 +29,7 @@ describe('A GET request to /api/v1/meals', () => {
                   expect(_meal).to.have.property('id').that.eqls(meal._data.id);
                   expect(_meal).to.have.property('name').that.eqls(meal._data.name);
                   expect(_meal).to.have.property('foods').that.is.an('array').with.lengthOf(2);
+                  done();
                 });
             }).catch(done);
           }).catch(done);

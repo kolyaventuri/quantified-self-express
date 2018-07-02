@@ -16,8 +16,15 @@ class Meal extends Model {
 
   get foods() {
     return new Promise((resolve, reject) => {
-      MealFood.where({ meal_id: this._data.id }, 'meal_foods').then(foods => {
-        resolve(foods);
+      MealFood.where({ meal_id: this._data.id }, 'meal_foods').then(mealFoods => {
+        let promises = mealFoods.map(mealFood => {
+          return Food.find(mealFood._data.food_id);
+        });
+
+        Promise.all(promises)
+          .then(foods => {
+            resolve(foods);
+          }).catch(reject);
       }).catch(reject);
     });
   }
