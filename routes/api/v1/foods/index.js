@@ -9,11 +9,11 @@ router.post('/', (req, res, next) => {
   if(!food.isValid) return res.status(400).send();
 
   food.save().then(data => {
-    res.json(data);
+    res.json(data[0]);
   }).catch(err => {
     console.error(err);
     res.status(500).send();
-  })
+  });
 });
 
 module.exports = router;
