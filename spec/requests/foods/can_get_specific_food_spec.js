@@ -11,8 +11,14 @@ describe('A GET request to a specific /api/v1/foods/:id', () => {
       new Food(foods[1]).save(),
       new Food(foods[2]).save(),
     ]).then((data) => {
+      data = data.sort((a, b) => {
+        a = a[0]; b = b[0];
+        if(a.id > b.id) return 1;
+        if(a.id < b.id) return -1;
+        return 0;
+      });
       chai.request(app)
-        .get(`/api/v1/foods/${data[0][1].id}`)
+        .get(`/api/v1/foods/${data[0][0].id}`)
         .end((err, res) => {
           expect(err).to.be.null;
           expect(res).to.have.status(200);
