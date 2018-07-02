@@ -24,8 +24,7 @@ describe('A GET request to a specific /api/v1/foods/:id', () => {
           expect(res).to.have.status(200);
           expect(res.body).to.be.an('object');
 
-          let food = data[0][1];
-
+          let food = data[0][0];
           expect(res.body).to.have.property('id').that.eqls(food.id);
           expect(res.body).to.have.property('name').that.eqls(food.name);
           expect(res.body).to.have.property('calories').that.eqls(food.calories);

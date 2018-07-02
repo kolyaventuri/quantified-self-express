@@ -67,10 +67,23 @@ class Model {
     return new Promise((resolve, reject) => {
       knex(_tableName).select('*').then((rows) => {
         let objects = rows.map(data => {
-          return new this(data).serialized;
+          return new this(data);
         });
 
         resolve(objects);
+      }).catch(reject);
+    });
+  }
+
+  static find(id) {
+    let _name = this.name.toLowerCase();
+    let _tableName = pluralize(_name);
+
+    return new Promise((resolve, reject) => {
+      knex(_tableName).where({ id }).then((rows) => {
+        let row = rows[0];
+
+        resolve(new this(row));
       }).catch(reject);
     });
   }
