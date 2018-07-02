@@ -21,14 +21,17 @@ describe('Meal', () => {
               expect(_foods).to.be.an('array');
               expect(_foods).to.have.lengthOf(0);
 
-              meal.foods.push(foods[0]);
-              meal.foods.push(foods[1]);
-              meal.save().then(data => {
-                meal.foods.then(_foods => {
-                  expect(_foods).to.have.lengthOf(2);
-                  done();
+              Promise.all([
+                meal.add_food(foods[0]),
+                meal.add_food(foods[1])
+              ]).then(() => {
+                meal.save().then(data => {
+                  meal.foods.then(_foods => {
+                    expect(_foods).to.have.lengthOf(2);
+                    done();
+                  }).catch(done);
                 }).catch(done);
-              }).catch(done);
+              });
             }).catch(done);
           });
         }).catch(done);
