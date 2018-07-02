@@ -34,7 +34,11 @@ class FoodsController {
   }
 
   static update(req, res, next) {
-    
+    Food.find(req.params.id).then(food => {
+      if(!food) return res.status(400).send();
+
+      res.json({})
+    });
   }
 }
 
