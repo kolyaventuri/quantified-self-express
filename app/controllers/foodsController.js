@@ -12,6 +12,7 @@ class FoodsController {
 
   static show(req, res, next) {
     Food.find(req.params.id).then(food => {
+      if(!food) return res.status(404).send();
       res.json(food.serialized);
     }).catch(err => {
       console.error(err);

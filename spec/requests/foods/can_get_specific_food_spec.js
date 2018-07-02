@@ -37,6 +37,15 @@ describe('A GET request to a specific /api/v1/foods/:id', () => {
     }).catch(err => {
       done(err);
     });
+  });
 
+  it('should return a 404 status if the food does not exist', (done) => {
+    chai.request(app)
+      .get('/api/v1/foods/1000')
+      .end((err, res) => {
+        expect(err).to.be.null;
+        expect(res).to.have.status(404)
+        done();
+      });
   });
 });
