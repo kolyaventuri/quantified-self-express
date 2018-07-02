@@ -49,6 +49,22 @@ class FoodsController {
       res.status(500).send();
     });
   }
+
+  static destroy(req, res, next) {
+    Food.find(req.params.id).then(food => {
+      if(!food) return res.status(404).send();
+
+      food.destroy().then(food => {
+        res.status(204).send();
+      }).catch(err => {
+        console.error(err);
+        res.status(500).send();
+      })
+    }).catch(err => {
+      console.error(err);
+      res.status(500).send();
+    })
+  }
 }
 
 module.exports = FoodsController;
