@@ -39,6 +39,20 @@ class Model {
     return this._valid;
   }
 
+  get serialized() {
+    let opts = Object.assign(this._data, {});
+    let keys = Object.keys(this._serializable || {});
+    return opts;
+    if(keys.length < 1) return opts;
+
+    let serialized = {};
+    for(let key of keys) {
+      serialized[key] = opts[key];
+    }
+
+    return serialized;
+  }
+
   /// Record methods
 
   save() {
@@ -48,10 +62,14 @@ class Model {
   static all() {
     let _name = this.name.toLowerCase();
     let _tableName = pluralize(_name);
-    
+
     return new Promise((resolve, reject) => {
       knex(_tableName).select('*').then((rows) => {
-        resolve(rows);
+        let foods = rows.map(food => {
+          new this(food);
+        });
+
+        resolve(foods);
       }).catch(reject);
     });
   }
