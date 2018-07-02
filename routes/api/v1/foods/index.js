@@ -12,6 +12,15 @@ router.get('/', (req, res, next) => {
   })
 });
 
+router.get('/:id', (req, res, next) => {
+  Food.find(req.params.id).then(food => {
+    res.json(food);
+  }).catch(err => {
+    console.error(err);
+    res.status(500).send();
+  });
+});
+
 router.post('/', (req, res, next) => {
   let food = new Food(req.body.food);
 
