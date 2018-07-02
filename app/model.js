@@ -111,6 +111,21 @@ class Model {
       }).catch(reject);
     });
   }
+
+  static where(opts, _tableName) {
+    let _name = this.name.toLowerCase();
+    _tableName = _tableName || pluralize(_name);
+
+    return new Promise((resolve, reject) => {
+      knex(_tableName).where(opts).then(rows => {
+        let objects = rows.map(row => {
+          return new this(row);
+        });
+
+        resolve(objects);
+      }).catch(reject);
+    });
+  }
 }
 
 module.exports = Model;

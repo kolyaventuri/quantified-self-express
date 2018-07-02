@@ -8,27 +8,29 @@ describe('Meal', () => {
   });
 
   it('should have many foods', (done) => {
-    let meal = new Meal({ name: 'Breakfast' });
-    let foods = new Array(3).fill(null).map(() => {
+    let create = new Array(3).fill(null).map(() => {
       return new Food({ name: 'Toast', calories: 30 }).save()
     });
+    create.push(new Meal({ name: 'Breakfast' }).save());
 
-    Promise.all(foods)
+    Promise.all(create)
       .then((data) => {
         Food.all().then(foods => {
-          meal.foods.then(_foods => {
-            expect(_foods).to.be.an('array');
-            expect(_foods).to.have.lengthOf(0);
+          Meal.find(1).then(meal => {
+            meal.foods.then(_foods => {
+              expect(_foods).to.be.an('array');
+              expect(_foods).to.have.lengthOf(0);
 
-            meal.foods.push(foods[0]);
-            meal.foods.push(foods[1]);
-            meal.save().then(data => {
-              meal.foods.then(_foods => {
-                expect(_foods).to.have.lengthOf(2);
-                done();
+              meal.foods.push(foods[0]);
+              meal.foods.push(foods[1]);
+              meal.save().then(data => {
+                meal.foods.then(_foods => {
+                  expect(_foods).to.have.lengthOf(2);
+                  done();
+                }).catch(done);
               }).catch(done);
             }).catch(done);
-          }).catch(done);
+          });
         }).catch(done);
       }).catch(done);
   });
