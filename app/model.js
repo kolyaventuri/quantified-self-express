@@ -39,10 +39,40 @@ class Model {
     return this._valid;
   }
 
+  get serialized() {
+    let opts = Object.assign(this._data, {});
+    let keys = Object.keys(this._serializable || {});
+
+    if(keys.length < 1) return opts;
+
+    let serialized = {};
+    for(let key of keys) {
+      serialized[key] = opts[key];
+    }
+
+
+    return serialized;
+  }
+
   /// Record methods
 
   save() {
-    return knex(this._tableName).insert(this._data, ['id', 'name', 'calories']);
+    return knex(this._tableName).insert(this._data, '*');
+  }
+
+  static all() {
+    let _name = this.name.toLowerCase();
+    let _tableName = pluralize(_name);
+
+    return new Promise((resolve, reject) => {
+      knex(_tableName).select('*').then((rows) => {
+        let objects = rows.map(data => {
+          return new this(data).serialized;
+        });
+
+        resolve(objects);
+      }).catch(reject);
+    });
   }
 }
 

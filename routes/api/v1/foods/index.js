@@ -3,6 +3,15 @@ var router = express.Router();
 
 const Food = require('../../../../app/models/food');
 
+router.get('/', (req, res, next) => {
+  Food.all().then(foods => {
+    res.json(foods);
+  }).catch(err => {
+    console.error(err);
+    res.status(500).send();
+  })
+});
+
 router.post('/', (req, res, next) => {
   let food = new Food(req.body.food);
 

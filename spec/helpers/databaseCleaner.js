@@ -1,9 +1,8 @@
-const cleaner = require('knex-cleaner');
 const knex = require('../../db/knex');
 
 class DatabaseCleaner {
   static clean() {
-    return cleaner.clean(knex);
+    return knex.raw('TRUNCATE TABLE foods,meals,meal_foods RESTART IDENTITY')
   }
 }
 
