@@ -25,15 +25,13 @@ describe('Meal', () => {
                 meal.add_food(foods[0]),
                 meal.add_food(foods[1])
               ]).then(() => {
-                meal.save().then(data => {
-                  meal.foods.then(_foods => {
-                    expect(_foods).to.have.lengthOf(2);
-                    done();
-                  }).catch(done);
+                meal.foods.then(_foods => {
+                  expect(_foods).to.have.lengthOf(2);
+                  done();
                 }).catch(done);
-              });
+              }).catch(done);
             }).catch(done);
-          });
+          }).catch(done);
         }).catch(done);
       }).catch(done);
   });

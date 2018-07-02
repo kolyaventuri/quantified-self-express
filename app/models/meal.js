@@ -21,6 +21,16 @@ class Meal extends Model {
       }).catch(reject);
     });
   }
+
+  add_food(food) {
+    return new Promise((resolve, reject) => {
+      new MealFood({ meal_id: this._data.id, food_id: food._data.id })
+        .save()
+        .then(() => {
+          resolve();
+        }).catch(reject);
+    });
+  }
 }
 
 module.exports = Meal;
