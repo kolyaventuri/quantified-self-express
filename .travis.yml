@@ -14,5 +14,5 @@ before_script:
   - psql -c 'create database qs_express;' -U postgres
   - psql -c 'create database qs_express_test;' -U postgres
 script:
-  - knex migrate:latest
+  - NODE_ENV=test knex migrate:latest
   - npm test
