@@ -82,7 +82,7 @@ class Model {
     return new Promise((resolve, reject) => {
       knex(_tableName).where({ id }).then((rows) => {
         let row = rows[0];
-
+        if(!row) return resolve(false);
         resolve(new this(row));
       }).catch(reject);
     });
