@@ -12,9 +12,8 @@ describe('A POST request to a specific /api/v1/meals/:meal_id/foods/:id', () => 
         Meal.find(1).then(meal => {
           Food.all().then(foods => {
             let food = foods[0];
-
             chai.request(app)
-              .post(`/api/v1/meals/${meal._data.id}/${food._data.id}`)
+              .post(`/api/v1/meals/${meal._data.id}/foods/${food._data.id}`)
               .end((err, res) => {
                 expect(err).to.be.null;
 
