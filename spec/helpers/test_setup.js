@@ -1,3 +1,5 @@
+process.env.NODE_ENV = 'test';
+
 const DatabaseCleaner = require('./databaseCleaner');
 const glob = require('glob');
 const path = require('path');
