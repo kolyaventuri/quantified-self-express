@@ -9,7 +9,7 @@ Quantified Self is a self-hosted calorie tracker. Simply add foods, and keep tra
 ## Usage
 ### Installation
 
-Clone down the repository and run `npm i` to fetch the necessary gems.
+Clone down the repository and run `npm i` to fetch the necessary packages. After installing, create both `qs_express` and `qs_express_test` databases in your Postgresql installation. Run `knex migrate:latest && knex seed:run` to migrate and seed the databases. You may need to run `npm i -g knex` to install the Knex CLI.
 
 ### Running Quantified self
 
