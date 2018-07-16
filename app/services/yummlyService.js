@@ -1,4 +1,4 @@
-const APIService = require('./APIService');
+const APIService = require('./APIservice');
 const BASE_URL = 'http://api.yummly.com/v1/api';
 
 const headers = {
