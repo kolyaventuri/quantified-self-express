@@ -17,6 +17,8 @@ describe('Food', () => {
 
   describe('.favorites', () => {
     it('returns an array of favorite foods', () => {
+      /** START GENERATE MOCK DATA **/
+
       let foods = [
         new Food({ name: 'Banana', calories: 200 }),
         new Food({ name: 'Meatloaf', calories: 800 }),
@@ -28,6 +30,9 @@ describe('Food', () => {
 
       foods.map(food => meal1.add_food);
       foods.slice(0,2).map(food => meal1.add_food);
+      meal1.add_food(foods[0]);
+
+      /** END GENERATE MOCK DATA **/
 
       let result = Food.favorites();
 
