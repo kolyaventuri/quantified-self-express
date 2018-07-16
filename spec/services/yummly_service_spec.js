@@ -5,4 +5,11 @@ describe('Yummly Service', () => {
     expect(process.env.YUMMLY_API_KEY).to.not.be.null;
   });
 
+  it('can query recipes', () => {
+    let result = Yummly.recipes('onion soup');
+
+    expect(result).to.be.an('object');
+
+    expect(result).to.have.property('matches').that.is.an('array');
+  });
 });
