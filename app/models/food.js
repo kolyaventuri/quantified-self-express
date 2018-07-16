@@ -25,29 +25,33 @@ class Food extends Model {
     };
 
     return new Promise((resolve, reject) => {
+      let result = [];
 
       db('meal_foods')
         .distinct('food_id')
         .groupBy('meal_foods.food_id')
         .count('food_id')
         .then(async data => {
-          let max = Math.max(...(data.map(mf => mf.count)));
-          let foods = data.filter(mf => mf.count == max);
+          let counts = new Set(data.map(mf => Number.parseInt(mf.count)).sort().reverse());
+          for(let count of counts) {
+            let foods = data.filter(mf => mf.count == count);
 
-          foods = await Promise.all(foods.map(async food => {
-            return Food.find(food.food_id)
-          }));
+            foods = await Promise.all(foods.map(async food => {
+              return Food.find(food.food_id)
+            }));
 
-          foods = foods.map(food => {
-            food = food.serialized;
-            delete food['id'];
-            return food;
-          });
+            foods = foods.map(food => {
+              food = food.serialized;
+              delete food['id'];
+              return food;
+            });
 
-          template.timesEaten = max;
-          template.foods = foods;
-
-          resolve(template);
+            result.push({
+              timesEaten: count,
+              foods
+            });
+          }
+          resolve(result);
         });
     })
   }
