@@ -2,8 +2,14 @@ const Food = require('../models/food');
 
 class FoodRecipesController {
 
-  static index(req, res, next) {
-    res.send('')
+  static async index(req, res, next) {
+    let food = await Food.find(req.params.id);
+
+    let recipes = await food.recipes();
+
+    res.json({
+      recipes
+    });
   }
 
 }
