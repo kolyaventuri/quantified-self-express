@@ -28,9 +28,9 @@ describe('Food', () => {
       let meal1 = new Meal({ name: 'A' });
       let meal2 = new Meal({ name: 'B' });
 
-      foods.map(food => meal1.add_food);
-      foods.slice(0,2).map(food => meal1.add_food);
-      meal1.add_food(foods[0]);
+      foods.map(food => meal1.addFood);
+      foods.slice(0,2).map(food => meal1.addFood);
+      meal1.addFood(foods[0]);
 
       /** END GENERATE MOCK DATA **/
 

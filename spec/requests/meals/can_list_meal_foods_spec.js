@@ -13,8 +13,8 @@ describe('A GET request to a specific /api/v1/meals/:meal_id/foods', () => {
         Meal.find(1).then(meal => {
           Food.all().then(foods => {
             Promise.all([
-              meal.add_food(foods[0]),
-              meal.add_food(foods[1])
+              meal.addFood(foods[0]),
+              meal.addFood(foods[1])
             ]).then(() => {
               chai.request(app)
                 .get(`/api/v1/meals/${meal._data.id}/foods`)

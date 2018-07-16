@@ -10,7 +10,7 @@ class FoodsController {
       Food.find(req.params.id).then(food => {
         if(!food) return res.status(404).send();
 
-        meal.add_food(food).then(() => {
+        meal.addFood(food).then(() => {
           res.status(201).json({ message: `Successfully added ${food._data.name} to ${meal._data.name}`});
         }).catch(err => {
           console.error(err);
