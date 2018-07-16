@@ -71,4 +71,17 @@ describe('Food', () => {
 
     });
   });
+
+  describe('#recipes', () => {
+    it('returns an array of up to 10 recipes for that food', async () => {
+      let food = new Food({ name: 'banana', calories: 80 });
+
+      let recipes = await food.recipes();
+
+      expect(recipes).to.be.an('array');
+
+      expect(recipes[0]).to.have.property('name');
+      expect(recipes[0]).to.have.property('url');
+    });
+  });
 });

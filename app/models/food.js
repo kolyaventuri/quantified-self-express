@@ -1,4 +1,5 @@
 const Model = require('../model');
+const Yummly = require('../services/yummlyService');
 const db = require('../../db/knex');
 
 const rules = {
@@ -70,6 +71,17 @@ class Food extends Model {
           return resolve(result)
         });
     })
+  }
+
+  async recipes() {
+    let recipes = await Yummly.recipes(this._data.name);
+
+    return recipes.matches.map(recipe => {
+      return {
+        name: recipe.recipeName,
+        url: `https://www.yummly.com/recipe/${recipe.id}`
+      };
+    });
   }
 }
 
