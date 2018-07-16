@@ -73,8 +73,10 @@ class Food extends Model {
     })
   }
 
-  async recipes() {
-    let recipes = await Yummly.recipes(this._data.name);
+  async recipes(page) {
+    page = page || 1;
+    page = Math.abs(page) - 1;
+    let recipes = await Yummly.recipes(this._data.name, page);
 
     return recipes.matches.map(recipe => {
       return {
