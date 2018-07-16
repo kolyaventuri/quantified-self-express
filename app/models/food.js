@@ -22,17 +22,24 @@ class Food extends Model {
       foods: []
     };
 
-    return new Promise((resolve, reject) => {
-      Meal.all().then(meals => {
-        let foods = {};
+    return new Promise(async (resolve, reject) => {
+      let meals = await Meal.all();
+      let foods = {};
 
-        for(let meal of meals) {
-          meal.foods.then(_foods => {
-            for(let food of _foods) {
-            }
-          });
+      for(let meal of meals) {
+        let _foods = await meal.foods;
+
+        for(let food of _foods) {
+          foods[food._data.id] = foods[food._data.id] || {
+            count: 0,
+            serialized: food.serialized
+          };
+
+          foods[food._data.id].count += 1;
         }
-      }).catch(reject);
+      }
+
+      resolve(foods);
     });
   }
 }

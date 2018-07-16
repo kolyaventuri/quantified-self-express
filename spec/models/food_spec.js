@@ -44,6 +44,7 @@ describe('Food', () => {
             ]).then(() => {
               /** END GENERATE MOCK DATA **/
               Food.favorites().then(result => {
+                eval(pry.it)
                 expect(result).to.be.an('object');
 
                 expect(result).to.have.property('timesEaten').that.eqls(2);
