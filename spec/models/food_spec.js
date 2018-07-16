@@ -16,7 +16,7 @@ describe('Food', () => {
   });
 
   describe('.favorites', () => {
-    it('returns an array of favorite foods', () => {
+    it('returns an array of favorite foods', (done) => {
       /** START GENERATE MOCK DATA **/
 
       let foods = [
@@ -28,22 +28,25 @@ describe('Food', () => {
       let meal1 = new Meal({ name: 'A' });
       let meal2 = new Meal({ name: 'B' });
 
-      foods.map(food => meal1.addFood);
-      foods.slice(0,2).map(food => meal1.addFood);
-      meal1.addFood(foods[0]);
+      Promise.all([
+        foods.map(food => meal1.addFood),
+        foods.slice(0,2).map(food => meal1.addFood),
+        meal1.addFood(foods[0])
+      ]).then(() => {
+        /** END GENERATE MOCK DATA **/
+        let result = Food.favorites();
 
-      /** END GENERATE MOCK DATA **/
+        expect(result).to.be.an('object');
 
-      let result = Food.favorites();
+        expect(result).to.have.property('timesEaten').that.eqls(2);
+        expect(result).to.have.property('foods').that.is.an('array');
 
-      expect(result).to.be.an('object');
+        expect(result.foods).to.have.lengthOf(2);
+        expect(result.foods[0]).to.have.property('name').that.eqls(foods[0].name);
+        expect(result.foods[1]).to.have.property('name').that.eqls(foods[1].name);
 
-      expect(result).to.have.property('timesEaten').that.eqls(2);
-      expect(result).to.have.property('foods').that.is.an('array');
-
-      expect(result.foods).to.have.lengthOf(2);
-      expect(result.foods[0]).to.have.property('name').that.eqls(foods[0].name);
-      expect(result.foods[1]).to.have.property('name').that.eqls(foods[1].name);
+        done();
+      }).catch(err => { done(err); });
     });
   });
 });
