@@ -57,6 +57,11 @@ describe('Food', () => {
                 expect(result[1].foods).to.have.lengthOf(1);
                 expect(result[1].foods[0]).to.have.property('name').that.eqls(foods[2]._data.name);
 
+
+                expect(result[0].foods[0]).to.have.property('mealsWhenEaten').that.is.an('array');
+                expect(result[0].foods[0].mealsWhenEaten).to.have.lengthOf(2);
+                expect(result[0].foods[0].mealsWhenEaten[0]).to.eql(meal1._data.name);
+
                 done();
               }).catch(err => { done(err); });
             }).catch(err => { done(err); });

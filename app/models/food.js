@@ -26,32 +26,48 @@ class Food extends Model {
 
     return new Promise((resolve, reject) => {
       let result = [];
+      db('foods')
+        .join('meal_foods', 'foods.id', '=', 'meal_foods.food_id')
+        .join('meals', 'meal_foods.meal_id', '=', 'meals.id')
+        .distinct('meal_foods.food_id')
+        .select(
+          'foods.calories',
+          'foods.name as food_name',
+          'meals.name as meal_name')
+        .then(_foods => {
+          let foods = {};
+          for(let food of _foods) {
+            let id = Number.parseInt(food.food_id);
+            foods[id] = foods[id] || {
+              timesEaten: 0,
+              data: {
+                name: food.food_name,
+                calories: food.calories,
+                mealsWhenEaten: []
+              }
+            };
 
-      db('meal_foods')
-        .distinct('food_id')
-        .groupBy('meal_foods.food_id')
-        .count('food_id')
-        .then(async data => {
-          let counts = new Set(data.map(mf => Number.parseInt(mf.count)).sort().reverse());
-          for(let count of counts) {
-            let foods = data.filter(mf => mf.count == count);
-
-            foods = await Promise.all(foods.map(async food => {
-              return Food.find(food.food_id)
-            }));
-
-            foods = foods.map(food => {
-              food = food.serialized;
-              delete food['id'];
-              return food;
-            });
-
-            result.push({
-              timesEaten: count,
-              foods
-            });
+            foods[id].timesEaten++;
+            foods[id].data.mealsWhenEaten.push(food.meal_name);
           }
-          resolve(result);
+
+          let times = {};
+
+          for(let food of Object.values(foods)) {
+            times[food.timesEaten] = times[food.timesEaten] || [];
+            times[food.timesEaten].push(food.data);
+          }
+
+          result = Object.values(times).sort((a, b) => {return b.length - a.length; });
+
+          result = result.map(item => {
+            return {
+              timesEaten: item.length,
+              foods: item
+            };
+          });
+
+          return resolve(result)
         });
     })
   }
