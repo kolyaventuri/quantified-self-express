@@ -39,7 +39,13 @@ class Food extends Model {
         }
       }
 
-      resolve(foods);
+      foods = Object.values(foods);
+      let counts = foods.map(food => food.count);
+      let maxCount = Math.max(...counts);
+
+      let maxFoods = foods.filter(food => food.count == maxCount);
+
+      resolve(maxFoods);
     });
   }
 }
