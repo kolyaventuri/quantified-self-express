@@ -27,17 +27,17 @@ describe('A GET request to /api/v1/favorite_foods', () => {
             ]).then(() => {
               /** END GENERATE MOCK DATA **/
               chai.request(app)
-                .get('/ai/v1/favorite_foods')
+                .get('/api/v1/favorite_foods')
                 .end((err, res) => {
                   expect(err).to.be.null;
                   expect(res).to.have.status(200);
                   expect(res.body).to.be.an('object');
 
                   let result = res.body;
-                  expect(result).to.have.property('timeseaten').that.eqls(2);
+                  expect(result).to.have.property('timesEaten').that.eqls(2);
                   expect(result).to.have.property('foods').that.is.an('array');
 
-                  expect(result.foods).to.have.lengthof(2);
+                  expect(result.foods).to.have.lengthOf(2);
                   expect(result.foods[0]).to.have.property('name').that.eqls(foods[0]._data.name);
                   expect(result.foods[1]).to.have.property('name').that.eqls(foods[1]._data.name);
 
