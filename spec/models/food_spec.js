@@ -25,27 +25,34 @@ describe('Food', () => {
         new Food({ name: 'Cabbage', calories: 100 })
       ];
 
+      foods.map(food => food.save());
+
       let meal1 = new Meal({ name: 'A' });
       let meal2 = new Meal({ name: 'B' });
+      meal1.save();
+      meal2.save();
 
       Promise.all([
         foods.map(food => meal1.addFood),
         foods.slice(0,2).map(food => meal1.addFood),
-        meal1.addFood(foods[0])
+        meal1.addFood(foods[0]),
+        meal1.save(),
+        meal2.save()
       ]).then(() => {
         /** END GENERATE MOCK DATA **/
-        let result = Food.favorites();
 
-        expect(result).to.be.an('object');
+        Food.favorites().then(result => {
+          expect(result).to.be.an('object');
 
-        expect(result).to.have.property('timesEaten').that.eqls(2);
-        expect(result).to.have.property('foods').that.is.an('array');
+          expect(result).to.have.property('timesEaten').that.eqls(2);
+          expect(result).to.have.property('foods').that.is.an('array');
 
-        expect(result.foods).to.have.lengthOf(2);
-        expect(result.foods[0]).to.have.property('name').that.eqls(foods[0].name);
-        expect(result.foods[1]).to.have.property('name').that.eqls(foods[1].name);
+          expect(result.foods).to.have.lengthOf(2);
+          expect(result.foods[0]).to.have.property('name').that.eqls(foods[0].name);
+          expect(result.foods[1]).to.have.property('name').that.eqls(foods[1].name);
 
-        done();
+          done();
+        }).catch(err => { done(err); });
       }).catch(err => { done(err); });
     });
   });

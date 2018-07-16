@@ -15,6 +15,13 @@ class Food extends Model {
     super(opts, rules);
     this._serializable = serializable;
   }
+
+  static async favorites() {
+    return await new Promise((resolve, reject) => {
+      let d = Meal.all();
+      resolve(d);
+    });
+  }
 }
 
 module.exports = Food;
