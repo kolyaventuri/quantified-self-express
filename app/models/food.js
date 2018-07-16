@@ -1,4 +1,6 @@
 const Model = require('../model');
+const db = require('../../db/knex');
+
 const rules = {
   name:     { required: true },
   calories: { required: true }
@@ -16,45 +18,42 @@ class Food extends Model {
     this._serializable = serializable;
   }
 
-  static favorites() {
+  static async favorites() {
     let template = {
       timesEaten: 0,
       foods: []
     };
 
-    return new Promise(async (resolve, reject) => {
-      let meals = await Meal.all();
-      let foods = {};
+    return new Promise((resolve, reject) => {
+      let result = [];
 
-      for(let meal of meals) {
-        let _foods = await meal.foods;
+      db('meal_foods')
+        .distinct('food_id')
+        .groupBy('meal_foods.food_id')
+        .count('food_id')
+        .then(async data => {
+          let counts = new Set(data.map(mf => Number.parseInt(mf.count)).sort().reverse());
+          for(let count of counts) {
+            let foods = data.filter(mf => mf.count == count);
 
-        for(let food of _foods) {
-          foods[food._data.id] = foods[food._data.id] || {
-            count: 0,
-            serialized: food.serialized
-          };
+            foods = await Promise.all(foods.map(async food => {
+              return Food.find(food.food_id)
+            }));
 
-          foods[food._data.id].count += 1;
-        }
-      }
+            foods = foods.map(food => {
+              food = food.serialized;
+              delete food['id'];
+              return food;
+            });
 
-      foods = Object.values(foods);
-      let counts = foods.map(food => food.count);
-      let maxCount = Math.max(...counts);
-
-      let maxFoods = foods.filter(food => food.count == maxCount);
-
-      maxFoods = maxFoods.map(food => {
-        delete food.serialized['id'];
-        return food.serialized;
-      });
-
-      template.timesEaten = maxCount;
-      template.foods = maxFoods;
-
-      resolve(template);
-    });
+            result.push({
+              timesEaten: count,
+              foods
+            });
+          }
+          resolve(result);
+        });
+    })
   }
 }
 
