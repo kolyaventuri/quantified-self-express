@@ -1,5 +1,5 @@
 const APIService = require('./APIService');
-const BASE_URL = 'http://api.yummly.com/v1';
+const BASE_URL = 'http://api.yummly.com/v1/api';
 
 const headers = {
   'X-Yummly-App-ID': process.env.YUMMLY_APP_ID,
@@ -11,7 +11,7 @@ const API = APIService.register(BASE_URL, headers);
 class Yumly {
 
   static async recipes(query) {
-    return await API.get('/recipes', { q: query });
+    return API.get('/recipes', { q: query });
   }
 
 }
