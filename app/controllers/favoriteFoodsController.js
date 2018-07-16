@@ -1,6 +1,10 @@
+const Food = require('../models/food');
+
 class FavoriteFoodsController {
-  static index() {
-    
+  static async index() {
+    let favorites = await Food.favorites();
+
+    res.json(favorites);
   }
 }
 
