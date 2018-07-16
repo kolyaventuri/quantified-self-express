@@ -11,4 +11,6 @@ router.patch('/:id',  FoodsController.update)
 router.put('/:id',    FoodsController.update)
 router.delete('/:id', FoodsController.destroy)
 
+router.use('/:id/recipes', require('./recipes'));
+
 module.exports = router;

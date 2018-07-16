@@ -4,7 +4,6 @@ if (process.env.NODE_ENV !== 'production') {
   if (result.error) {
     throw result.error;
   }
-  console.log(result.parsed);
 }
 
 var createError = require('http-errors');
