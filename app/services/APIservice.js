@@ -1,3 +1,5 @@
+const RequestBuilder = require('./requestBuilder');
+
 class APIService {
 
   constructor(url, headers) {
