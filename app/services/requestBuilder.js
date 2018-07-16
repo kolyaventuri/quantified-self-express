@@ -13,7 +13,8 @@ class RequestBuilder {
 
     let opts = {
       uri: `${_url}?${query}`,
-      headers: this.headers
+      headers: this.headers,
+      json: true 
     };
 
     return opts;
