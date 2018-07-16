@@ -32,7 +32,7 @@ class Meal extends Model {
     });
   }
 
-  add_food(food) {
+  addFood(food) {
     return new Promise((resolve, reject) => {
       new MealFood({ meal_id: this._data.id, food_id: food._data.id })
         .save()

@@ -12,7 +12,7 @@ describe('A DELETE request to a specific /api/v1/meals/:meal_id/foods/:id', () =
         Meal.find(1).then(meal => {
           Food.all().then(foods => {
             let food = foods[0];
-            meal.add_food(food).then(() => {
+            meal.addFood(food).then(() => {
               chai.request(app)
                 .delete(`/api/v1/meals/${meal._data.id}/foods/${food._data.id}`)
                 .end((err, res) => {

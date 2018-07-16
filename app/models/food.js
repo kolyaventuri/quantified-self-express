@@ -15,6 +15,47 @@ class Food extends Model {
     super(opts, rules);
     this._serializable = serializable;
   }
+
+  static favorites() {
+    let template = {
+      timesEaten: 0,
+      foods: []
+    };
+
+    return new Promise(async (resolve, reject) => {
+      let meals = await Meal.all();
+      let foods = {};
+
+      for(let meal of meals) {
+        let _foods = await meal.foods;
+
+        for(let food of _foods) {
+          foods[food._data.id] = foods[food._data.id] || {
+            count: 0,
+            serialized: food.serialized
+          };
+
+          foods[food._data.id].count += 1;
+        }
+      }
+
+      foods = Object.values(foods);
+      let counts = foods.map(food => food.count);
+      let maxCount = Math.max(...counts);
+
+      let maxFoods = foods.filter(food => food.count == maxCount);
+
+      maxFoods = maxFoods.map(food => {
+        delete food.serialized['id'];
+        return food.serialized;
+      });
+
+      template.timesEaten = maxCount;
+      template.foods = maxFoods;
+
+      resolve(template);
+    });
+  }
 }
 
 module.exports = Food;
