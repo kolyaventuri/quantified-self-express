@@ -14,4 +14,31 @@ describe('Food', () => {
     expect(food.isValid).to.be.false;
     expect(food2.isValid).to.be.true;
   });
+
+  describe('.favorites', () => {
+    it('returns an array of favorite foods', () => {
+      let foods = [
+        new Food({ name: 'Banana', calories: 200 }),
+        new Food({ name: 'Meatloaf', calories: 800 }),
+        new Food({ name: 'Cabbage', calories: 100 })
+      ];
+
+      let meal1 = new Meal({ name: 'A' });
+      let meal2 = new Meal({ name: 'B' });
+
+      foods.map(food => meal1.add_food);
+      foods.slice(0,2).map(food => meal1.add_food);
+
+      let result = Food.favorites();
+
+      expect(result).to.be.an('object');
+
+      expect(result).to.have.property('timesEaten').that.eqls(2);
+      expect(result).to.have.property('foods').that.is.an('array');
+
+      expect(result.foods).to.have.lengthOf(2);
+      expect(result.foods[0]).to.have.property('name').that.eqls(foods[0].name);
+      expect(result.foods[1]).to.have.property('name').that.eqls(foods[1].name);
+    });
+  });
 });
