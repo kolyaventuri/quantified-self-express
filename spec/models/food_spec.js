@@ -73,7 +73,9 @@ describe('Food', () => {
   });
 
   describe('#recipes', () => {
-    it('returns an array of up to 10 recipes for that food', async () => {
+    let recipeOne = null;
+
+    it('returns an array of up to 3 recipes for that food', async () => {
       let food = new Food({ name: 'banana', calories: 80 });
 
       let recipes = await food.recipes();
@@ -82,6 +84,21 @@ describe('Food', () => {
 
       expect(recipes[0]).to.have.property('name');
       expect(recipes[0]).to.have.property('url');
+
+      recipeOne = recipes[0];
+    });
+
+    it('can return the next 3 recipes', async () => {
+      let food = new Food({ name: 'banana', calories: 80 });
+
+      let recipes = await food.recipes(2);
+
+      expect(recipes).to.be.an('array');
+
+      expect(recipes[0]).to.have.property('name');
+      expect(recipes[0]).to.have.property('url');
+
+      expect(recipes[0].name).to.not.eql(recipeOne.name);
     });
   });
 });
