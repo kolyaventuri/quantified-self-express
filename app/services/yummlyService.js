@@ -1,4 +1,4 @@
-const APIService = require('./APIService');
+const APIService = require('./APIservice');
 const BASE_URL = 'http://api.yummly.com/v1/api';
 
 const headers = {
@@ -7,11 +7,13 @@ const headers = {
 };
 
 const API = APIService.register(BASE_URL, headers);
+const PAGE_LIMIT = 3;
 
 class Yumly {
 
-  static async recipes(query) {
-    return API.get('/recipes', { q: query, maxResult: 10 });
+  static async recipes(query, page) {
+    page = page || 0;
+    return API.get('/recipes', { q: query, maxResult: PAGE_LIMIT, start: (PAGE_LIMIT * page)});
   }
 
 }
