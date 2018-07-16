@@ -16,10 +16,23 @@ class Food extends Model {
     this._serializable = serializable;
   }
 
-  static async favorites() {
-    return await new Promise((resolve, reject) => {
-      let d = Meal.all();
-      resolve(d);
+  static favorites() {
+    let template = {
+      timesEaten: 0,
+      foods: []
+    };
+
+    return new Promise((resolve, reject) => {
+      Meal.all().then(meals => {
+        let foods = {};
+
+        for(let meal of meals) {
+          meal.foods.then(_foods => {
+            for(let food of _foods) {
+            }
+          });
+        }
+      }).catch(reject);
     });
   }
 }
