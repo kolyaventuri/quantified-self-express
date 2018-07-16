@@ -11,7 +11,7 @@ const API = APIService.register(BASE_URL, headers);
 class Yumly {
 
   static async recipes(query) {
-    return await API.get('/recipe', { q: query });
+    return await API.get('/recipes', { q: query });
   }
 
 }
