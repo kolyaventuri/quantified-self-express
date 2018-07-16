@@ -1,7 +1,16 @@
 class APIService {
 
-  static async get(url, parameters) {
+  constructor(url, headers) {
+    this.BASE_URL = url;
+    this.headers = headers;
+  }
+
+  async get(url, parameters) {
     
+  }
+
+  static register(url, headers) {
+    return new this(url, headers);
   }
 
 }
