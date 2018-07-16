@@ -45,7 +45,15 @@ class Food extends Model {
 
       let maxFoods = foods.filter(food => food.count == maxCount);
 
-      resolve(maxFoods);
+      maxFoods = maxFoods.map(food => {
+        delete food.serialized['id'];
+        return food.serialized;
+      });
+
+      template.timesEaten = maxCount;
+      template.foods = maxFoods;
+
+      resolve(template);
     });
   }
 }

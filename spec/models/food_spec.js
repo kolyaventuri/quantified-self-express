@@ -44,15 +44,14 @@ describe('Food', () => {
             ]).then(() => {
               /** END GENERATE MOCK DATA **/
               Food.favorites().then(result => {
-                eval(pry.it)
                 expect(result).to.be.an('object');
 
                 expect(result).to.have.property('timesEaten').that.eqls(2);
                 expect(result).to.have.property('foods').that.is.an('array');
 
                 expect(result.foods).to.have.lengthOf(2);
-                expect(result.foods[0]).to.have.property('name').that.eqls(foods[0].name);
-                expect(result.foods[1]).to.have.property('name').that.eqls(foods[1].name);
+                expect(result.foods[0]).to.have.property('name').that.eqls(foods[0]._data.name);
+                expect(result.foods[1]).to.have.property('name').that.eqls(foods[1]._data.name);
 
                 done();
               }).catch(err => { done(err); });
